@@ -1,4 +1,4 @@
-package db
+package gooseneck
 
 import (
 	"database/sql"
@@ -13,8 +13,8 @@ const (
 )
 
 type DatabaseTool struct {
-	connection *sql.DB
-	dsn        string
+	Connection *sql.DB
+	DSN        string
 }
 
 func NewDatabaseTool() *DatabaseTool {
@@ -23,23 +23,23 @@ func NewDatabaseTool() *DatabaseTool {
 		log.Fatalf("Fatal: environment key %s not set", DATABASE_URL)
 
 	}
-	tool := DatabaseTool{dsn: dsn}
+	tool := DatabaseTool{DSN: dsn}
 	if conn, err := tool.Connect(); err != nil {
 		log.Fatalf("Fatal: no db connection.  Error: %s", err)
 	} else {
-		tool.connection = conn
+		tool.Connection = conn
 	}
 	return &tool
 }
 
 func (db *DatabaseTool) Connect() (*sql.DB, error) {
-	if db.connection == nil {
-		conn, err := sql.Open("postgres", db.dsn)
+	if db.Connection == nil {
+		conn, err := sql.Open("postgres", db.DSN)
 		if err != nil {
 			return nil, err
 		}
-		db.connection = conn
+		db.Connection = conn
 		log.Println("Database connected")
 	}
-	return db.connection, nil
+	return db.Connection, nil
 }
