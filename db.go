@@ -8,10 +8,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	DATABASE_URL = "DATABASE_URL"
-)
-
 type DatabaseTool struct {
 	Connection *sql.DB
 	DSN        string
