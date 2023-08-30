@@ -8,18 +8,18 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type DatabaseTool struct {
+type DB struct {
 	Connection *sql.DB
 	DSN        string
 }
 
-func NewDatabaseTool() *DatabaseTool {
+func NewDB() *DB {
 	dsn := os.Getenv(DATABASE_URL)
 	if dsn == "" {
 		log.Fatalf("Fatal: environment key %s not set", DATABASE_URL)
 
 	}
-	tool := DatabaseTool{DSN: dsn}
+	tool := DB{DSN: dsn}
 	if conn, err := tool.Connect(); err != nil {
 		log.Fatalf("Fatal: no db connection.  Error: %s", err)
 	} else {
@@ -28,7 +28,7 @@ func NewDatabaseTool() *DatabaseTool {
 	return &tool
 }
 
-func (db *DatabaseTool) Connect() (*sql.DB, error) {
+func (db *DB) Connect() (*sql.DB, error) {
 	if db.Connection == nil {
 		conn, err := sql.Open("postgres", db.DSN)
 		if err != nil {
