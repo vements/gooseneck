@@ -5,3 +5,5 @@ import (
 )
 
 type Cache = cache.Cache
+
+var NewCache = cache.New
