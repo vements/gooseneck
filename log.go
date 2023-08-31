@@ -47,4 +47,7 @@ var (
 	Error = log.Error
 	Fatal = log.Fatal
 	Panic = log.Panic
+
+	//
+	Log = log.Log
 )
