@@ -2,7 +2,6 @@ package gooseneck
 
 import (
 	"database/sql"
-	"log"
 	"os"
 
 	_ "github.com/lib/pq"
@@ -16,12 +15,11 @@ type DB struct {
 func NewDB() *DB {
 	dsn := os.Getenv(DATABASE_URL)
 	if dsn == "" {
-		log.Fatalf("Fatal: environment key %s not set", DATABASE_URL)
-
+		Fatal().Str("key", DATABASE_URL).Msg("not set")
 	}
 	tool := DB{DSN: dsn}
 	if conn, err := tool.Connect(); err != nil {
-		log.Fatalf("Fatal: no db connection.  Error: %s", err)
+		Fatal().Err(err).Msg("connection failed")
 	} else {
 		tool.Connection = conn
 	}
@@ -35,7 +33,7 @@ func (db *DB) Connect() (*sql.DB, error) {
 			return nil, err
 		}
 		db.Connection = conn
-		log.Println("Database connected")
+		Info().Msg("database connected")
 	}
 	return db.Connection, nil
 }
