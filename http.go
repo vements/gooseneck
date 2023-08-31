@@ -11,3 +11,7 @@ func MakeResponseFunc(status int, body string) func(w http.ResponseWriter) {
 		w.Write([]byte(body))
 	}
 }
+
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	MakeResponseFunc(http.StatusOK, "{}")(w)
+}
