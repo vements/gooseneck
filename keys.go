@@ -9,6 +9,7 @@ const (
 const (
 	DATABASE_URL = "DATABASE_URL"
 	JWT_SECRET   = "JWT_SECRET"
+	LOG_LEVEL    = "LOG_LEVEL"
 	PORT         = "PORT"
 	UPSTREAM     = "UPSTREAM"
 )
