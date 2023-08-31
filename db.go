@@ -7,6 +7,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
+func init() {
+	InitLog()
+}
+
 type DB struct {
 	Connection *sql.DB
 	DSN        string
