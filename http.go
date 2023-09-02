@@ -2,9 +2,13 @@ package gooseneck
 
 import (
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-// TODO: add "github.com/julienschmidt/httprouter"
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	MakeResponseFunc(http.StatusOK, "{}")(w)
+}
 
 func MakeResponseFunc(status int, body string) func(w http.ResponseWriter) {
 	return func(w http.ResponseWriter) {
@@ -14,6 +18,6 @@ func MakeResponseFunc(status int, body string) func(w http.ResponseWriter) {
 	}
 }
 
-func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	MakeResponseFunc(http.StatusOK, "{}")(w)
+func NewHttpRouter() *httprouter.Router {
+	return httprouter.New()
 }
