@@ -21,5 +21,3 @@ func MakeResponseFunc(status int, body string) func(w http.ResponseWriter) {
 func NewHttpRouter() *httprouter.Router {
 	return httprouter.New()
 }
-
-type HttpRouterParams httprouter.Params
