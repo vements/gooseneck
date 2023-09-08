@@ -3,8 +3,10 @@ package gooseneck
 import mqtt "github.com/eclipse/paho.mqtt.golang"
 
 const (
-	MQTT_BROKER = "MQTT_BROKER"
-	MQTT_TOPIC  = "MQTT_TOPIC"
+	MQTT_BROKER   = "MQTT_BROKER"
+	MQTT_PASSWORD = "MQTT_PASSWORD"
+	MQTT_TOPIC    = "MQTT_TOPIC"
+	MQTT_USERNAME = "MQTT_USERNAME"
 )
 
 func NewMessageQueueClient(broker string, clientId string, username string, password string) mqtt.Client {
