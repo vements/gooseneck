@@ -3,7 +3,7 @@ package gooseneck
 const (
 	AUTHORIZATION = "Authorization"
 	BEARER        = "Bearer "
-	X_APIKEY      = "X-Api-Key"
+	X_API_KEY     = "X-Api-Key"
 )
 
 const (
