@@ -15,7 +15,7 @@ const (
 	MQTT_USERNAME = "MQTT_USERNAME"
 )
 
-func NewMessageQueueClient(broker string, clientId string, username string, password string) mqtt.Client {
+func NewMessageQueueClient(broker string, clientId string, username string, password string, defaultHandler mqtt.MessageHandler) mqtt.Client {
 	options := mqtt.NewClientOptions()
 	client := mqtt.NewClient(
 		options.
@@ -37,6 +37,10 @@ func NewMessageQueueClient(broker string, clientId string, username string, pass
 			}).
 			SetReconnectingHandler(func(c mqtt.Client, o *mqtt.ClientOptions) {
 				Info().Str("broker", broker).Str("client", clientId).Msg("re-connection attempt")
+			}).
+			SetDefaultPublishHandler(func(c mqtt.Client, m mqtt.Message) {
+				Info().Str("broker", broker).Str("client", clientId).Str("topic", m.Topic()).Msg("default handler")
+				defaultHandler(c, m)
 			}))
 	if token := client.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
