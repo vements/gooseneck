@@ -3,6 +3,8 @@ package gooseneck
 import (
 	"crypto/tls"
 	"net/url"
+	"os"
+	"path/filepath"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -14,6 +16,30 @@ const (
 	MQTT_TOPIC    = "MQTT_TOPIC"
 	MQTT_USERNAME = "MQTT_USERNAME"
 )
+
+type MqttEnv struct {
+	Env
+}
+
+func (e MqttEnv) Broker() string {
+	return e.MustDefine(MQTT_BROKER)
+}
+
+func (e MqttEnv) ClientID() string {
+	return filepath.Base(os.Args[0])
+}
+
+func (e MqttEnv) Topic() string {
+	return e.MustDefine(MQTT_TOPIC)
+}
+
+func (e MqttEnv) Username() string {
+	return e.MustDefine(MQTT_USERNAME)
+}
+
+func (e MqttEnv) Password() string {
+	return e.MustDefine(MQTT_PASSWORD)
+}
 
 func NewMessageQueueClient(broker string, clientId string, username string, password string, defaultHandler mqtt.MessageHandler) mqtt.Client {
 	options := mqtt.NewClientOptions()
