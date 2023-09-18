@@ -9,8 +9,8 @@ import (
 const (
 	REDIS_ADDR     = "REDIS_ADDR"
 	REDIS_DATABASE = "REDIS_DATABASE"
-	REDIS_USERNAME = "REDIS_USERNAME"
 	REDIS_PASSWORD = "REDIS_PASSWORD"
+	REDIS_USERNAME = "REDIS_USERNAME"
 )
 
 type RedisEnv struct {
@@ -29,12 +29,12 @@ func (e RedisEnv) Database() int {
 	}
 }
 
-func (e RedisEnv) Username() string {
-	return e.MustDefine(REDIS_USERNAME)
-}
-
 func (e RedisEnv) Password() string {
 	return e.MustDefine(REDIS_PASSWORD)
+}
+
+func (e RedisEnv) Username() string {
+	return e.MustDefine(REDIS_USERNAME)
 }
 
 func NewRedisClient() *redis.Client {
@@ -42,8 +42,8 @@ func NewRedisClient() *redis.Client {
 	Info().Str("host", env.Addr()).Msg("using redis")
 	return redis.NewClient(&redis.Options{
 		Addr:     env.Addr(),
-		Password: env.Username(),
-		Username: env.Password(),
+		Password: env.Password(),
+		Username: env.Username(),
 		DB:       env.Database(),
 	})
 }
